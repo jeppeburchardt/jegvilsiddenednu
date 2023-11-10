@@ -1,32 +1,58 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Retning</router-link>
+      <router-link to="/map">Kort</router-link>
     </nav>
-    <router-view />
+    <div class="content">
+      <LocationProvider>
+        <OrientationProvider>
+          <router-view />
+        </OrientationProvider>
+      </LocationProvider>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts" setup>
+import LocationProvider from "./components/LocationProvider.vue";
+import OrientationProvider from "./components/OrientationProvider.vue";
+</script>
 
+<style lang="scss" scoped>
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+}
 nav {
-  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50px;
 
   a {
-    font-weight: bold;
-    color: #2c3e50;
+    color: #f7f4e1;
+    font-size: 22px;
+    text-decoration: none;
+    margin: -20px;
+    padding: 20px;
 
     &.router-link-exact-active {
-      color: #42b983;
+      text-decoration: underline;
     }
   }
+}
+.content {
+  flex: 1 2 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
 }
 </style>
