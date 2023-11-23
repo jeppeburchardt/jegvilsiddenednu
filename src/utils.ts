@@ -1,6 +1,7 @@
 import { Location } from "@/types";
 import { getDistance } from "geolib";
 import { GeolibInputCoordinates } from "geolib/es/types";
+import { SEARCH_RADIUS } from "./constants";
 
 export const findClosest = (needle: Location, haystack: Location[]) =>
   new Promise<{ closest: Location; nearby: Location[] }>((resolve) => {
@@ -30,7 +31,7 @@ export const findClosest = (needle: Location, haystack: Location[]) =>
           closest = haystack[position];
         }
 
-        if (distance < 500) {
+        if (distance < SEARCH_RADIUS) {
           nearby.push(haystack[position]);
         }
 

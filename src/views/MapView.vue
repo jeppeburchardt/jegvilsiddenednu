@@ -35,7 +35,7 @@
           strokeWidth: 1,
         }"
         :visible="true"
-        :radius="1000"
+        :radius="SEARCH_RADIUS"
         :center="locationGmap"
       />
       <GmapCircle
@@ -54,11 +54,12 @@
       />
       <GmapMarker v-if="!!location" key="device" :position="locationGmap" />
     </GmapMap>
-    <p>Viser {{ amount }} bænke inden for 500m.</p>
+    <p>Viser {{ amount }} bænke inden for {{ SEARCH_RADIUS }}m.</p>
   </Fragment>
 </template>
 
 <script setup lang="ts">
+import { SEARCH_RADIUS } from "@/constants";
 import store from "@/store";
 import { LocationKey } from "@/types";
 import { computed, inject, onMounted } from "vue";
