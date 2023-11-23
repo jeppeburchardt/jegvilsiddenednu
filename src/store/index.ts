@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import benchesRawData from "./benches.json";
 import { Location, Store } from "@/types";
-import { findClosest } from "@/utils";
+import { findNearbyLocations } from "@/utils";
 import { getDistance } from "geolib";
 
 Vue.use(Vuex);
@@ -60,7 +60,7 @@ export default new Vuex.Store<Store>({
         // 5 meters
         context.commit("resetSearch");
         context.commit("setDeviceLocation", location);
-        const { closest, nearby } = await findClosest(
+        const { closest, nearby } = await findNearbyLocations(
           location,
           context.state.benches
         );

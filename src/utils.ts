@@ -3,7 +3,7 @@ import { getDistance } from "geolib";
 import { GeolibInputCoordinates } from "geolib/es/types";
 import { SEARCH_RADIUS } from "./constants";
 
-export const findClosest = (needle: Location, haystack: Location[]) =>
+export const findNearbyLocations = (needle: Location, haystack: Location[]) =>
   new Promise<{ closest: Location; nearby: Location[] }>((resolve) => {
     let position = 0;
 
