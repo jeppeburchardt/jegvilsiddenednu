@@ -1,11 +1,15 @@
 import { Location } from "@/types";
-import geoDistance from "geo-distance-helper";
+import { getDistance } from "geolib";
+import { GeolibInputCoordinates } from "geolib/es/types";
 
 export const findClosest = (needle: Location, haystack: Location[]) =>
   new Promise<{ closest: Location; nearby: Location[] }>((resolve) => {
     let position = 0;
 
-    const device = { lat: needle[0], lng: needle[1] };
+    const device: GeolibInputCoordinates = {
+      latitude: needle[0],
+      longitude: needle[1],
+    };
     let closestDistance = Number.MAX_VALUE;
     let closest: Location;
     const nearby: Location[] = [];
@@ -14,19 +18,19 @@ export const findClosest = (needle: Location, haystack: Location[]) =>
       const batchStartTime = Date.now();
 
       while (Date.now() - batchStartTime < 10 && position < haystack.length) {
-        const target = {
-          lat: haystack[position][0],
-          lng: haystack[position][1],
+        const target: GeolibInputCoordinates = {
+          latitude: haystack[position][0],
+          longitude: haystack[position][1],
         };
 
-        const distance = geoDistance(target, device) as number;
+        const distance = getDistance(target, device);
 
         if (distance < closestDistance) {
           closestDistance = distance;
           closest = haystack[position];
         }
 
-        if (distance < 1) {
+        if (distance < 500) {
           nearby.push(haystack[position]);
         }
 

@@ -16,19 +16,20 @@ import store from "@/store";
 import { bearing } from "@/utils";
 import { LocationKey, OrientationKey } from "@/types";
 import { computed, inject } from "vue";
-import geoDistance from "geo-distance-helper";
+import { getDistance } from "geolib";
 
 const device = store.getters.deviceLocation;
 const selected = store.getters.selectedBench;
 
+const orientation = inject(OrientationKey);
+const location = inject(LocationKey);
+
 const distance = computed(() => {
   if (!device || !selected) return 0;
 
-  return Math.floor(
-    (geoDistance(
-      { lat: device[0], lng: device[0] },
-      { lat: selected[0], lng: selected[0] }
-    ) as number) * 1000
+  return getDistance(
+    { latitude: device[0], longitude: device[0] },
+    { latitude: selected[0], longitude: selected[0] }
   );
 });
 
@@ -36,9 +37,6 @@ const bearingDegree = computed(() => {
   const b = bearing(device[0], device[1], selected[0], selected[1]);
   return ((orientation?.value ?? 0) - b + 360) % 360;
 });
-
-const orientation = inject(OrientationKey);
-const location = inject(LocationKey);
 
 const accuracy = computed(() => {
   return Math.round(location?.value.accuracy || 0);

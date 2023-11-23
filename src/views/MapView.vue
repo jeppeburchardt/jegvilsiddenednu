@@ -54,7 +54,7 @@
       />
       <GmapMarker v-if="!!location" key="device" :position="locationGmap" />
     </GmapMap>
-    <p>Viser {{ amount }} bænke inden for 1km.</p>
+    <p>Viser {{ amount }} bænke inden for 500m.</p>
   </Fragment>
 </template>
 

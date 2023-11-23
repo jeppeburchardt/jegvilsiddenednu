@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import benchesRawData from "./benches.json";
 import { Location, Store } from "@/types";
 import { findClosest } from "@/utils";
-import geoDistance from "geo-distance-helper";
+import { getDistance } from "geolib";
 
 Vue.use(Vuex);
 
@@ -50,13 +50,13 @@ export default new Vuex.Store<Store>({
       const { deviceLocation } = context.state;
 
       const distance = deviceLocation
-        ? (geoDistance(
-            { lat: deviceLocation[0], lng: deviceLocation[1] },
-            { lat: location[0], lng: location[1] }
-          ) as number)
+        ? getDistance(
+            { latitude: deviceLocation[0], longitude: deviceLocation[1] },
+            { latitude: location[0], longitude: location[1] }
+          )
         : Number.MAX_VALUE;
 
-      if (distance > 0.005) {
+      if (distance > 5) {
         // 5 meters
         context.commit("resetSearch");
         context.commit("setDeviceLocation", location);
