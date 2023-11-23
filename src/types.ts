@@ -17,7 +17,7 @@ export type Location = [lat: number, long: number];
 
 export type Store = {
   benches: Location[];
-  selectedBench: Location | null;
+  targetBench: Location | null;
   deviceLocation: Location | null;
   progress: number;
   nearbyBenches: Location[];

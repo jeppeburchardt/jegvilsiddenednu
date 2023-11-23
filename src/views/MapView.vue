@@ -25,6 +25,16 @@
         :clickable="false"
         :draggable="false"
       />
+      <!-- target bench:
+       <GmapMarker
+        key="target"
+        :position="{
+          lat: targetBench[0],
+          lng: targetBench[1],
+        }"
+        :clickable="false"
+        :draggable="false"
+      /> -->
       <GmapCircle
         v-if="!!location"
         key="rangeCircle"
@@ -64,9 +74,13 @@ import store from "@/store";
 import { LocationKey } from "@/types";
 import { computed, inject, onMounted } from "vue";
 import { Fragment } from "vue-fragment";
+
 const location = inject(LocationKey);
+
 const nearbyBenches = computed(() => store.getters.nearbyBenches);
+// const targetBench = computed(() => store.getters.targetBench);
 const amount = computed(() => store.getters.amountOfNearbyBenches);
+
 const locationGmap = computed(() => ({
   lat: location?.value.position.latitude || 0,
   lng: location?.value.position.longitude || 0,

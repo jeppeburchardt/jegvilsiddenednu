@@ -19,7 +19,7 @@ import { computed, inject } from "vue";
 import { getDistance } from "geolib";
 
 const device = store.getters.deviceLocation;
-const selected = store.getters.selectedBench;
+const selected = store.getters.targetBench;
 
 const orientation = inject(OrientationKey);
 const location = inject(LocationKey);

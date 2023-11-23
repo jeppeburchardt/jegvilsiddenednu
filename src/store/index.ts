@@ -12,14 +12,14 @@ const benches = benchesRawData as Location[];
 export default new Vuex.Store<Store>({
   state: {
     benches,
-    selectedBench: null,
+    targetBench: null,
     deviceLocation: null,
     nearbyBenches: [],
     progress: 0,
   },
   getters: {
-    selectedBench(state) {
-      return state.selectedBench;
+    targetBench(state) {
+      return state.targetBench;
     },
     deviceLocation(state) {
       return state.deviceLocation;
@@ -33,15 +33,15 @@ export default new Vuex.Store<Store>({
   },
   mutations: {
     resetSearch(state) {
-      state.selectedBench = null;
+      state.targetBench = null;
     },
     setDeviceLocation(state, location: Location) {
       state.deviceLocation = location;
     },
-    setSelectedBench(state, bench: Location) {
-      state.selectedBench = bench;
+    setTargetBench(state, bench: Location) {
+      state.targetBench = bench;
     },
-    setCloseBenches(state, benches: Location[]) {
+    setNearbyBenches(state, benches: Location[]) {
       state.nearbyBenches = benches;
     },
   },
@@ -64,8 +64,8 @@ export default new Vuex.Store<Store>({
           location,
           context.state.benches
         );
-        context.commit("setSelectedBench", closest);
-        context.commit("setCloseBenches", nearby);
+        context.commit("setTargetBench", closest);
+        context.commit("setNearbyBenches", nearby);
       }
     },
   },
