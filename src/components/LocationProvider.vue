@@ -2,7 +2,7 @@
   <fragment v-if="uiState === 'ok'">
     <slot />
   </fragment>
-  <PromptScreen
+  <prompt-screen
     v-else
     headline="Hvor er du?"
     description="For at vise dig vej til den nærmeste bænk skal vi bruge din position, klik på knappen for automatisk at finde din position"
@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { onUnmounted, provide, ref } from "vue";
 import { LocationKey, LocationWrapper } from "@/types";
-import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
+import { PromptScreenState } from "./ui/PromptScreen.vue";
 import store from "@/store";
 
 const pollTimerId = ref<number>();

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import DirectionView from "../views/DirectionView.vue";
+import MapView from "../views/MapView.vue";
 
 Vue.use(VueRouter);
 
@@ -13,14 +14,13 @@ const routes: Array<RouteConfig> = [
   {
     path: "/map",
     name: "map",
-    component: () =>
-      import(/* webpackChunkName: "map" */ "../views/MapView.vue"),
+    component: MapView,
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: import.meta.env.BASE_URL,
   routes,
 });
 

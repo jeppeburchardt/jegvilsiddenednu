@@ -1,6 +1,6 @@
 <template>
   <Fragment>
-    <GmapMap
+    <!-- <GmapMap
       ref="gMapRef"
       :center="locationGmap"
       :zoom="17"
@@ -25,7 +25,7 @@
         :clickable="false"
         :draggable="false"
       />
-      <!-- target bench:
+      target bench:
        <GmapMarker
         key="target"
         :position="{
@@ -34,7 +34,7 @@
         }"
         :clickable="false"
         :draggable="false"
-      /> -->
+      />
       <GmapCircle
         v-if="!!location"
         key="rangeCircle"
@@ -63,7 +63,7 @@
         :center="locationGmap"
       />
       <GmapMarker v-if="!!location" key="device" :position="locationGmap" />
-    </GmapMap>
+    </GmapMap> -->
     <p>Viser {{ amount }} bænke inden for {{ SEARCH_RADIUS }}m.</p>
   </Fragment>
 </template>
@@ -86,11 +86,11 @@ const locationGmap = computed(() => ({
   lng: location?.value.position.longitude || 0,
 }));
 
-onMounted(() => {
-  this.$refs.gMapRef.$mapPromise.then((map) => {
-    map.panTo(locationGmap.value);
-  });
-});
+// onMounted(() => {
+//   this.$refs.gMapRef.$mapPromise.then((map) => {
+//     map.panTo(locationGmap.value);
+//   });
+// });
 </script>
 
 <style scoped lang="scss">
