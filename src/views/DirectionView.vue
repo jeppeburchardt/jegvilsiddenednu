@@ -12,13 +12,13 @@
 </template>
 
 <script lang="ts" setup>
-import { store } from "../store";
+import { useStore } from "../store";
 import { bearing } from "../utils";
 import { LocationKey, OrientationKey } from "../types";
 import { computed, inject } from "vue";
 import { getDistance } from "geolib";
 
-
+const store = useStore();
 const device = store.getters.deviceLocation;
 const selected = store.getters.targetBench;
 

@@ -16,7 +16,7 @@ export const OrientationKey: InjectionKey<Ref<number | undefined>> =
 
 export type Location = [lat: number, long: number];
 
-export type Store = {
+export type State = {
   benches: Location[];
   targetBench: Location | null;
   deviceLocation: Location | null;

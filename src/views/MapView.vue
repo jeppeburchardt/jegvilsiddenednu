@@ -38,12 +38,13 @@
 
 <script setup lang="ts">
 import { SEARCH_RADIUS } from "../constants";
-import { store } from "../store";
+import { useStore } from "../store";
 import { LocationKey } from "../types";
 import { computed, inject } from "vue";
 import { GOOGLE_MAPS_API_KEY } from "../constants";
 import { GoogleMap, Marker, Circle } from "vue3-google-map";
 
+const store = useStore();
 const location = inject(LocationKey);
 
 const nearbyBenches = computed(() => store.getters.nearbyBenches);
@@ -54,8 +55,6 @@ const locationGmap = computed(() => ({
   lat: location?.value?.position.latitude || 0,
   lng: location?.value?.position.longitude || 0,
 }));
-
-
 </script>
 
 <style lang="scss">

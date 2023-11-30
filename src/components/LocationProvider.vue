@@ -15,8 +15,9 @@
 import { onUnmounted, provide, ref } from "vue";
 import { LocationKey, LocationWrapper } from "../types";
 import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
-import {store} from "../store";
+import { useStore } from "../store";
 
+const store = useStore();
 const pollTimerId = ref<number>();
 const error = ref<string>();
 const uiState = ref<PromptScreenState>("initial");

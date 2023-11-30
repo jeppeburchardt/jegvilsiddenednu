@@ -1,12 +1,19 @@
-import { createStore } from "vuex";
+import { createStore, Store, useStore as baseUseStore } from "vuex";
 import benchesRawData from "./benches.json";
-import { Location, Store } from "../types";
+import { Location, State } from "../types";
 import { findNearbyLocations } from "../utils";
 import { getDistance } from "geolib";
+import { InjectionKey } from "vue";
 
 const benches = benchesRawData as Location[];
 
-export const store = createStore<Store>({
+export const key: InjectionKey<Store<State>> = Symbol();
+
+export function useStore() {
+  return baseUseStore(key);
+}
+
+export const store = createStore<State>({
   state: {
     benches,
     targetBench: null,
