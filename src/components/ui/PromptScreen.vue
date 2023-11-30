@@ -1,5 +1,5 @@
 <template>
-  <vue-fragment>
+  <div>
     <!-- initial -->
     <div class="prompt" v-if="state === 'initial'">
       <p class="text">{{ headline }}</p>
@@ -14,7 +14,7 @@
     <div v-if="state === 'error'">
       <p>Der skete en fejl: {{ error }}</p>
     </div>
-  </vue-fragment>
+  </div>
 </template>
 
 <script lang="ts" setup>

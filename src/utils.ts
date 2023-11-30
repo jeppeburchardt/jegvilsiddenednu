@@ -1,4 +1,4 @@
-import { Location } from "@/types";
+import { Location } from "./types";
 import { getDistance } from "geolib";
 import { GeolibInputCoordinates } from "geolib/es/types";
 import { SEARCH_RADIUS } from "./constants";

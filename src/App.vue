@@ -5,14 +5,19 @@
       <router-link to="/map">Kort</router-link>
     </nav>
     <div class="content">
-      <location-provider>
-        <orientation-provider>
+      <LocationProvider>
+        <OrientationProvider>
           <router-view />
-        </orientation-provider>
-      </location-provider>
+        </OrientationProvider>
+      </LocationProvider>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import LocationProvider from "./components/LocationProvider.vue";
+import OrientationProvider from "./components/OrientationProvider.vue";
+</script>
 
 <style lang="scss" scoped>
 #app {

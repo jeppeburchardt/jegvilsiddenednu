@@ -1,8 +1,6 @@
 <template>
-  <fragment v-if="uiState === 'ok' || uiState === 'error'">
-    <slot />
-  </fragment>
-  <prompt-screen
+  <slot v-if="uiState === 'ok' || uiState === 'error'" />
+  <PromptScreen
     v-else
     headline="Hvor kigger du hen?"
     description="For at vise dig hvilken vej du skal gå skal vi bruge retningen på din enhed"
@@ -15,8 +13,8 @@
 
 <script lang="ts" setup>
 import { provide, ref } from "vue";
-import { OrientationKey } from "@/types";
-import { PromptScreenState } from "./ui/PromptScreen.vue";
+import { OrientationKey } from "../types";
+import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
 
 const error = ref<string>();
 const uiState = ref<PromptScreenState>("initial");

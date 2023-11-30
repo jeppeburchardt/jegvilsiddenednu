@@ -1,15 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 import benchesRawData from "./benches.json";
-import { Location, Store } from "@/types";
-import { findNearbyLocations } from "@/utils";
+import { Location, Store } from "../types";
+import { findNearbyLocations } from "../utils";
 import { getDistance } from "geolib";
-
-Vue.use(Vuex);
 
 const benches = benchesRawData as Location[];
 
-export default new Vuex.Store<Store>({
+export const store = createStore<Store>({
   state: {
     benches,
     targetBench: null,

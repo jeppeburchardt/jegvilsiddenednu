@@ -12,11 +12,12 @@
 </template>
 
 <script lang="ts" setup>
-import store from "@/store";
-import { bearing } from "@/utils";
-import { LocationKey, OrientationKey } from "@/types";
+import { store } from "../store";
+import { bearing } from "../utils";
+import { LocationKey, OrientationKey } from "../types";
 import { computed, inject } from "vue";
 import { getDistance } from "geolib";
+
 
 const device = store.getters.deviceLocation;
 const selected = store.getters.targetBench;
@@ -39,7 +40,7 @@ const bearingDegree = computed(() => {
 });
 
 const accuracy = computed(() => {
-  return Math.round(location?.value.accuracy || 0);
+  return Math.round(location?.value?.accuracy || 0);
 });
 </script>
 
