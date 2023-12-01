@@ -1,10 +1,16 @@
 <template>
   <div class="home">
     <div class="wrapper">
-      <div
-        class="arrow"
+      <ResponsiveImage
+        name="compass"
+        class="compass"
+        :style="{ transform: `rotate(-${orientation}deg)` }"
+      />
+      <ResponsiveImage
+        name="direction"
+        class="direction"
         :style="{ transform: `rotate(-${bearingDegree}deg)` }"
-      ></div>
+      />
     </div>
     <div class="distance">{{ distance }}<span>m</span></div>
     <div class="accuracy">{{ accuracy }} meters nøjagtighed</div>
@@ -16,7 +22,8 @@ import { useStore } from "../store";
 import { bearing } from "../utils";
 import { LocationKey, OrientationKey } from "../types";
 import { computed, inject } from "vue";
-import { getPreciseDistance } from "geolib";
+import { getDistance } from "geolib";
+import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
 
 const store = useStore();
 const deviceLocation = computed(() => store.getters.deviceLocation);
@@ -28,9 +35,9 @@ const location = inject(LocationKey);
 const distance = computed(() => {
   if (!deviceLocation.value || !targetBench.value) return 0;
 
-  return getPreciseDistance(
-    { latitude: deviceLocation.value[0], longitude: deviceLocation.value[1] },
-    { latitude: targetBench.value[0], longitude: targetBench.value[1] }
+  return getDistance(
+    makeLatLng(deviceLocation.value),
+    makeLatLng(targetBench.value)
   );
 });
 
@@ -44,6 +51,12 @@ const bearingDegree = computed(() => {
 const accuracy = computed(() => {
   return Math.round(location?.value?.accuracy || 0);
 });
+
+function makeLatLng(value:[number, number]) {
+  return { latitude: value[0], longitude: value[1] };
+}
+
+
 </script>
 
 <style scoped lang="scss">
@@ -57,21 +70,20 @@ const accuracy = computed(() => {
 p {
   margin-bottom: 30px;
 }
-.arrow {
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-bottom: 112px solid #fff;
+.direction {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.compass {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .wrapper {
+  position: relative;
   width: 140px;
   height: 140px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -79,11 +91,10 @@ p {
   font-size: 56px;
   margin-top: 16px;
   text-align: center;
-
-  span {
-    font-size: 48px;
-    margin-left: 5px;
-  }
+}
+.distance span {
+  font-size: 48px;
+  margin-left: 5px;
 }
 
 .accuracy {
