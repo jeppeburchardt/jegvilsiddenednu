@@ -1,7 +1,5 @@
 <template>
-  <fragment v-if="uiState === 'ok' || uiState === 'error'">
-    <slot />
-  </fragment>
+  <slot v-if="uiState === 'ok' || uiState === 'error'" />
   <PromptScreen
     v-else
     headline="Hvor kigger du hen?"
@@ -15,7 +13,7 @@
 
 <script lang="ts" setup>
 import { provide, ref } from "vue";
-import { OrientationKey } from "@/types";
+import { OrientationKey } from "../types";
 import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
 
 const error = ref<string>();

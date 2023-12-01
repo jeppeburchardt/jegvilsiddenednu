@@ -1,10 +1,8 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import DirectionView from "../views/DirectionView.vue";
+import MapView from "../views/MapView.vue";
 
-Vue.use(VueRouter);
-
-const routes: Array<RouteConfig> = [
+const routes = [
   {
     path: "/",
     name: "direction",
@@ -13,15 +11,11 @@ const routes: Array<RouteConfig> = [
   {
     path: "/map",
     name: "map",
-    component: () =>
-      import(/* webpackChunkName: "map" */ "../views/MapView.vue"),
+    component: MapView,
   },
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+export const router = createRouter({
+  history: createWebHistory(),
   routes,
 });
-
-export default router;

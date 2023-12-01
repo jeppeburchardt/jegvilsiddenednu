@@ -1,5 +1,5 @@
 <template>
-  <Fragment>
+  <div>
     <!-- initial -->
     <div class="prompt" v-if="state === 'initial'">
       <p class="text">{{ headline }}</p>
@@ -14,13 +14,12 @@
     <div v-if="state === 'error'">
       <p>Der skete en fejl: {{ error }}</p>
     </div>
-  </Fragment>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import PushButton from "./PushButton.vue";
 import LoadingIndicator from "./LoadingIndicator.vue";
-import { Fragment } from "vue-fragment";
 export type PromptScreenState = "initial" | "loading" | "error" | "ok";
 
 defineProps<{

@@ -8,14 +8,15 @@ export type LocationWrapper = {
   accuracy: number;
 };
 
-export const LocationKey: InjectionKey<Ref<LocationWrapper>> =
+export const LocationKey: InjectionKey<Ref<LocationWrapper | undefined>> =
   Symbol("Location");
 
-export const OrientationKey: InjectionKey<Ref<number>> = Symbol("Orientation");
+export const OrientationKey: InjectionKey<Ref<number | undefined>> =
+  Symbol("Orientation");
 
 export type Location = [lat: number, long: number];
 
-export type Store = {
+export type State = {
   benches: Location[];
   targetBench: Location | null;
   deviceLocation: Location | null;
