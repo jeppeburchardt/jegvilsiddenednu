@@ -19,25 +19,25 @@ import { computed, inject } from "vue";
 import { getPreciseDistance } from "geolib";
 
 const store = useStore();
-const device = store.state.deviceLocation;
-const selected = store.state.targetBench;
+const deviceLocation = computed(() => store.getters.deviceLocation);
+const targetBench = computed(() => store.state.targetBench);
 
 const orientation = inject(OrientationKey);
 const location = inject(LocationKey);
 
 const distance = computed(() => {
-  if (!device || !selected) return 0;
+  if (!deviceLocation.value || !targetBench.value) return 0;
 
   return getPreciseDistance(
-    { latitude: device[0], longitude: device[0] },
-    { latitude: selected[0], longitude: selected[0] }
+    { latitude: deviceLocation.value[0], longitude: deviceLocation.value[1] },
+    { latitude: targetBench.value[0], longitude: targetBench.value[1] }
   );
 });
 
 const bearingDegree = computed(() => {
-  if (!device || !selected) return 0;
+  if (!deviceLocation.value || !targetBench.value) return 0;
   
-  const b = bearing(device[0], device[1], selected[0], selected[1]);
+  const b = bearing(deviceLocation.value[0], deviceLocation.value[1], targetBench.value[0], targetBench.value[1]);
   return ((orientation?.value ?? 0) - b + 360) % 360;
 });
 
