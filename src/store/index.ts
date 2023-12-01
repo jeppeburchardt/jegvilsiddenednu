@@ -2,6 +2,7 @@ import {
   createStore,
   Store as VuexStore,
   useStore as baseUseStore,
+  createLogger,
 } from "vuex";
 import benchesRawData from "./benches.json";
 import { Location, State } from "../types";
@@ -46,4 +47,5 @@ export const store = createStore<State>({
   mutations,
   actions,
   modules: {},
+  plugins: [createLogger()],
 });
