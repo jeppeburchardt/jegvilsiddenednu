@@ -23,7 +23,7 @@
       }"
     />
     <Marker
-      v-for="(bench) in nearbyBenches"
+      v-for="bench in nearbyBenches"
       :options="{
         label: 'B',
         title: 'Bænk',
@@ -47,7 +47,7 @@ import { GoogleMap, Marker, Circle } from "vue3-google-map";
 const store = useStore();
 const location = inject(LocationKey);
 
-const nearbyBenches = computed(() => store.getters.nearbyBenches);
+const nearbyBenches = computed(() => store.state.nearbyBenches);
 // const targetBench = computed(() => store.getters.targetBench);
 const amount = computed(() => store.getters.amountOfNearbyBenches);
 

@@ -16,6 +16,7 @@ import { onUnmounted, provide, ref } from "vue";
 import { LocationKey, LocationWrapper } from "../types";
 import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
 import { useStore } from "../store";
+import { ActionTypes } from "../store/actions";
 
 const store = useStore();
 const pollTimerId = ref<number>();
@@ -25,7 +26,6 @@ const location = ref<LocationWrapper>();
 provide(LocationKey, location);
 
 function updateLocation(gepPos: GeolocationPosition) {
-  console.log("updateLocation", gepPos.coords.accuracy);
   location.value = {
     position: {
       longitude: gepPos.coords.longitude,
@@ -33,7 +33,7 @@ function updateLocation(gepPos: GeolocationPosition) {
     },
     accuracy: gepPos.coords.accuracy,
   };
-  store.dispatch("updateDeviceLocation", [
+  store.dispatch(ActionTypes.UPDATE_DEVICE_LOCATION, [
     gepPos.coords.latitude,
     gepPos.coords.longitude,
   ]);
