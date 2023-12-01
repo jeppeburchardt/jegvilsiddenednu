@@ -1,5 +1,5 @@
 <template>
-  <GoogleMap ref="gMapRef" :api-key="GOOGLE_MAPS_API_KEY" :center="locationGmap" class="map" :zoom="17">
+  <GoogleMap ref="gMapRef" :api-key="GOOGLE_MAPS_API_KEY" class="map" :zoom="17">
     <Circle
       :options="{
         radius: SEARCH_RADIUS,
@@ -35,20 +35,22 @@
     </CustomMarker>
   </GoogleMap>
   
-  <p>Viser {{ amount }} (ud af {{ total }}) bænke inden for {{ SEARCH_RADIUS }}m.</p>
+  <p>Viser {{ amount }} bænke inden for {{ SEARCH_RADIUS }}m. {{ total }} kendte bænke</p>
 </template>
 
 <script setup lang="ts">
 import { SEARCH_RADIUS } from "../constants";
 import { useStore } from "../store";
 import { LocationKey } from "../types";
-import { computed, inject } from "vue";
+import { computed, inject, ref, watchEffect } from "vue";
 import { GOOGLE_MAPS_API_KEY } from "../constants";
 import { GoogleMap, Circle, CustomMarker } from "vue3-google-map";
 import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
 
 const store = useStore();
 const location = inject(LocationKey);
+const gMapRef = ref<InstanceType<typeof GoogleMap>>();
+const isInitialPositionSet = ref(false)
 
 const nearbyBenches = computed(() => store.state.nearbyBenches);
 const targetBench = computed(() => store.getters.targetBench);
@@ -64,6 +66,13 @@ function isTargetBench(bench: [number, number]) {
   if (!targetBench.value) return false;
   return bench[0] === targetBench.value[0] && bench[1] === targetBench.value[1];
 }
+
+watchEffect(() => {
+  if (gMapRef.value?.ready && locationGmap.value && !isInitialPositionSet.value) {
+    gMapRef.value.map.panTo(locationGmap.value);
+    isInitialPositionSet.value = true;
+  }
+});
 </script>
 
 <style lang="scss">
@@ -77,5 +86,6 @@ function isTargetBench(bench: [number, number]) {
 }
 p {
   text-align: center;
+  font-size: 12px;
 }
 </style>
