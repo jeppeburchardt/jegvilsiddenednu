@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 import { OrientationKey } from "../types";
 import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
 
@@ -44,6 +44,7 @@ function onDeviceOrientation(e: DeviceOrientationEvent | Event) {
 
 function onGetOrientationClick() {
   uiState.value = "loading";
+  sessionStorage.setItem("previouslyGrantedOrientation", "YES");
 
   if (
     "requestPermission" in DeviceOrientationEvent &&
@@ -88,4 +89,10 @@ function onGetOrientationClick() {
   //   });
   // }
 }
+
+onMounted(() => {
+  if (sessionStorage.getItem("previouslyGrantedOrientation") === "YES") {
+    onGetOrientationClick();
+  }
+});
 </script>

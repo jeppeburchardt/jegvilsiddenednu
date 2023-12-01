@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onUnmounted, provide, ref } from "vue";
+import { onMounted, onUnmounted, provide, ref } from "vue";
 import { LocationKey, LocationWrapper } from "../types";
 import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
 import { useStore } from "../store";
@@ -64,7 +64,14 @@ function onGetLocationClick() {
     });
 
   uiState.value = "loading";
+  sessionStorage.setItem("previouslyGrantedLocation", "YES");
 }
+
+onMounted(() => {
+  if (sessionStorage.getItem("previouslyGrantedLocation") === "YES") {
+    onGetLocationClick();
+  }
+});
 
 onUnmounted(() => {
   if (pollTimerId.value) {
