@@ -20,6 +20,5 @@ export type State = {
   benches: Location[];
   targetBench: Location | null;
   deviceLocation: Location | null;
-  progress: number;
   nearbyBenches: Location[];
 };

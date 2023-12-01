@@ -41,7 +41,6 @@ export const store = createStore<State>({
     targetBench: null,
     deviceLocation: null,
     nearbyBenches: [],
-    progress: 0,
   },
   getters,
   mutations,
