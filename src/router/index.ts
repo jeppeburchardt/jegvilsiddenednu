@@ -7,11 +7,13 @@ const routes = [
     path: "/",
     name: "direction",
     component: DirectionView,
+    meta: { transition: "right" },
   },
   {
     path: "/map",
     name: "map",
     component: MapView,
+    meta: { transition: "left" },
   },
 ];
 

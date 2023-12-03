@@ -1,17 +1,13 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Retning</router-link>
-      <router-link to="/map">Kort</router-link>
-    </nav>
-    <div class="content">
-      <LocationProvider>
-        <OrientationProvider>
-          <router-view />
-        </OrientationProvider>
-      </LocationProvider>
-    </div>
-  </div>
+  <LocationProvider>
+    <OrientationProvider>
+      <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition as string">
+          <component :is="Component" :key="route.path" class="route-view" />
+        </transition>
+      </router-view>
+    </OrientationProvider>
+  </LocationProvider>
 </template>
 
 <script lang="ts" setup>
@@ -19,40 +15,57 @@ import LocationProvider from "./components/LocationProvider.vue";
 import OrientationProvider from "./components/OrientationProvider.vue";
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #app {
-  display: flex;
-  align-items: center;
-  justify-content: stretch;
   min-height: 100vh;
   min-height: 100dvh;
-  flex-direction: column;
+  position: relative;
+} 
+.route-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 50px;
 
-  a {
-    color: #f7f4e1;
-    font-size: 22px;
-    text-decoration: none;
-    margin: -20px;
-    padding: 20px;
+.left-enter-active {
+  transition: opacity 400ms, transform 400ms;
+  opacity: .6;
+  transform: translateX(100%);
+}
+.left-leave-active {
+  transition: opacity 400ms, transform 400ms;
+  opacity: 1;
+  transform: translateX(0);
+}
+.left-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+.left-leave-to {
+  opacity: .6;
+  transform: translateX(-100%);
+}
 
-    &.router-link-exact-active {
-      text-decoration: underline;
-    }
-  }
+.right-enter-active {
+  transition: opacity 400ms, transform 400ms;
+  opacity: .6;
+  transform: translateX(-100%);
 }
-.content {
-  flex: 1 2 auto;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
+.right-leave-active {
+  transition: opacity 400ms, transform 400ms;
+  opacity: 1;
+  transform: translateX(0);
 }
+.right-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+.right-leave-to {
+  opacity: .6;
+  transform: translateX(100%);
+}
+
 </style>

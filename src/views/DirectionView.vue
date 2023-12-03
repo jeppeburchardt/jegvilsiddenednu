@@ -12,15 +12,25 @@
         :style="{ transform: `rotate(-${bearingDegree}deg)` }"
       />
     </div>
-    <div class="distance">{{ distance }}<span>m</span></div>
-    <div class="accuracy">{{ accuracy }} meters nøjagtighed</div>
+
+    <div class="map-nav">
+      <div>
+        <div></div>
+        <div class="strong">{{ distance }} <span>M</span></div>
+      </div>
+      <nav>
+        <router-link to="/map">
+          <ResponsiveImage name="nav-map" />
+        </router-link>
+      </nav>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useStore } from "../store";
 import { bearing } from "../utils";
-import { LocationKey, OrientationKey } from "../types";
+import { OrientationKey } from "../types";
 import { computed, inject } from "vue";
 import { getDistance } from "geolib";
 import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
@@ -30,7 +40,7 @@ const deviceLocation = computed(() => store.getters.deviceLocation);
 const targetBench = computed(() => store.state.targetBench);
 
 const orientation = inject(OrientationKey);
-const location = inject(LocationKey);
+// const location = inject(LocationKey);
 
 const distance = computed(() => {
   if (!deviceLocation.value || !targetBench.value) return 0;
@@ -48,9 +58,9 @@ const bearingDegree = computed(() => {
   return ((orientation?.value ?? 0) - b + 360) % 360;
 });
 
-const accuracy = computed(() => {
-  return Math.round(location?.value?.accuracy || 0);
-});
+// const accuracy = computed(() => {
+//   return Math.round(location?.value?.accuracy || 0);
+// });
 
 function makeLatLng(value:[number, number]) {
   return { latitude: value[0], longitude: value[1] };
@@ -82,24 +92,33 @@ p {
 }
 .wrapper {
   position: relative;
-  width: 140px;
-  height: 140px;
-  margin-bottom: 20px;
+  width: 210px;
+  height: 210px;
 }
 
-.distance {
-  font-size: 56px;
-  margin-top: 16px;
-  text-align: center;
-}
-.distance span {
-  font-size: 48px;
-  margin-left: 5px;
-}
+.map-nav {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
+  padding: 24px 24px 48px 24px;
+  
+  font-weight: 600;
 
-.accuracy {
-  font-size: 22px;
-  margin-top: 16px;
-  text-align: center;
+  
+  nav {
+    text-align: right;
+  }
+
+  .strong {
+    font-size: 40px;
+    font-weight: 600;
+
+    span {
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
 }
 </style>

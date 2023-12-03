@@ -3,22 +3,20 @@
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  text: String,
-});
+defineProps<{ text: string }>();
 </script>
 
 <style lang="scss" scoped>
 button {
-  color: #2c3e50;
-  background-color: #f7f4e1;
+  color: white;
+  background-color: #3FB396;
+  border: 0;
 
   padding: 10px 0;
-  font-size: 18px;
+  border-radius: 20px;
 
-  border: 0;
-  border-radius: 4px;
+  font-size: 14px;
 
-  width: 100%;
+  transition: opacity 400ms;
 }
 </style>

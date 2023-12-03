@@ -1,25 +1,17 @@
 <template>
-  <div class="container">
-    <div class="lds-roller">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 .lds-roller {
   position: relative;
   width: 80px;
@@ -36,7 +28,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #f7f4e1;
+  background: #13342C;
   margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
