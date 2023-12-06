@@ -21,4 +21,5 @@ export type State = {
   targetBench: Location | null;
   deviceLocation: Location | null;
   nearbyBenches: Location[];
+  userSelectedBench: Location | null;
 };

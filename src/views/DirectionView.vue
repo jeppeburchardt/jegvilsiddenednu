@@ -15,8 +15,8 @@
 
     <div class="map-nav">
       <div>
-        <div></div>
         <div class="strong">{{ distance }} <span>M</span></div>
+        <div>{{ accuracy }} m usikkerhed</div>
       </div>
       <nav>
         <router-link to="/map">
@@ -30,17 +30,17 @@
 <script lang="ts" setup>
 import { useStore } from "../store";
 import { bearing } from "../utils";
-import { OrientationKey } from "../types";
+import { LocationKey, OrientationKey } from "../types";
 import { computed, inject } from "vue";
 import { getDistance } from "geolib";
 import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
 
 const store = useStore();
 const deviceLocation = computed(() => store.getters.deviceLocation);
-const targetBench = computed(() => store.state.targetBench);
+const targetBench = computed(() => store.getters.targetBench);
 
 const orientation = inject(OrientationKey);
-// const location = inject(LocationKey);
+const location = inject(LocationKey);
 
 const distance = computed(() => {
   if (!deviceLocation.value || !targetBench.value) return 0;
@@ -58,9 +58,9 @@ const bearingDegree = computed(() => {
   return ((orientation?.value ?? 0) - b + 360) % 360;
 });
 
-// const accuracy = computed(() => {
-//   return Math.round(location?.value?.accuracy || 0);
-// });
+const accuracy = computed(() => {
+  return Math.round(location?.value?.accuracy || 0);
+});
 
 function makeLatLng(value:[number, number]) {
   return { latitude: value[0], longitude: value[1] };
@@ -75,6 +75,7 @@ function makeLatLng(value:[number, number]) {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  backdrop-filter: blur(10px);
 }
 
 p {
@@ -106,7 +107,6 @@ p {
   
   font-weight: 600;
 
-  
   nav {
     text-align: right;
   }

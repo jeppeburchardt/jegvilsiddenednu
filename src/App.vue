@@ -1,8 +1,9 @@
 <template>
   <LocationProvider>
     <OrientationProvider>
+      <MapView />
       <router-view v-slot="{ Component, route }">
-        <transition :name="route.meta.transition as string">
+        <transition name="drawer">
           <component :is="Component" :key="route.path" class="route-view" />
         </transition>
       </router-view>
@@ -13,6 +14,7 @@
 <script lang="ts" setup>
 import LocationProvider from "./components/LocationProvider.vue";
 import OrientationProvider from "./components/OrientationProvider.vue";
+import MapView from "./views/MapView.vue";
 </script>
 
 <style lang="scss">
@@ -30,42 +32,20 @@ import OrientationProvider from "./components/OrientationProvider.vue";
   overflow: hidden;
 }
 
-.left-enter-active {
-  transition: opacity 400ms, transform 400ms;
-  opacity: .6;
-  transform: translateX(100%);
+.drawer-enter-active {
+  transition: transform 400ms;
+  transform: translateY(100%);
 }
-.left-leave-active {
-  transition: opacity 400ms, transform 400ms;
-  opacity: 1;
-  transform: translateX(0);
+.drawer-leave-active {
+  transition: transform 400ms;
+  transform: translateY(0);
 }
-.left-enter-to {
-  opacity: 1;
-  transform: translateX(0);
+.drawer-enter-to {
+  transform: translateY(0);
 }
-.left-leave-to {
-  opacity: .6;
-  transform: translateX(-100%);
+.drawer-leave-to {
+  transform: translateY(100%);
 }
 
-.right-enter-active {
-  transition: opacity 400ms, transform 400ms;
-  opacity: .6;
-  transform: translateX(-100%);
-}
-.right-leave-active {
-  transition: opacity 400ms, transform 400ms;
-  opacity: 1;
-  transform: translateX(0);
-}
-.right-enter-to {
-  opacity: 1;
-  transform: translateX(0);
-}
-.right-leave-to {
-  opacity: .6;
-  transform: translateX(100%);
-}
 
 </style>

@@ -16,6 +16,9 @@ export const getters: GetterTree<State, State> & Getters = {
     return state.benches.length;
   },
   targetBench(state) {
+    if (state.userSelectedBench) {
+      return state.userSelectedBench;
+    }
     return state.targetBench;
   },
   deviceLocation(state) {

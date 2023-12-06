@@ -26,7 +26,9 @@
         :options="{
           position: { lat: bench[0], lng: bench[1] },
           zIndex: isTargetBench(bench) ? 1 : 0,
+          anchorPoint: isTargetBench(bench) ? 'BOTTOM_CENTER' : 'CENTER',
         }"
+        @click="setUserSelectedBench(bench)"
       >
         <ResponsiveImage name="bench" v-if="!isTargetBench(bench)" />
         <ResponsiveImage name="target-bench" v-if="isTargetBench(bench)" />
@@ -43,15 +45,16 @@
         <div>Bænke inden for {{ SEARCH_RADIUS }} m</div>
         <div class="strong">{{ amount }}</div>
       </div>
-      <router-link to="/">
-          <ResponsiveImage name="nav-dir" />
-        </router-link>
+      <router-link to="/dir">
+        <ResponsiveImage name="nav-dir" />
+      </router-link>
     </nav>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useStore } from "../store";
+import { ActionTypes } from "../store/actions";
 import { LocationKey } from "../types";
 import { computed, inject, ref, watchEffect } from "vue";
 import { GOOGLE_MAPS_API_KEY, SEARCH_RADIUS } from "../constants";
@@ -78,6 +81,10 @@ function isTargetBench(bench: [number, number]) {
   return bench[0] === targetBench.value[0] && bench[1] === targetBench.value[1];
 }
 
+function setUserSelectedBench(bench: [number, number]) {
+  store.dispatch(ActionTypes.SELECT_BENCH, bench);
+}
+
 watchEffect(() => {
   if (gMapRef.value?.ready && locationGmap.value && !isInitialPositionSet.value) {
     gMapRef.value.map.panTo(locationGmap.value);
@@ -91,6 +98,12 @@ watchEffect(() => {
   flex: 1 2 auto;
   display: flex;
   flex-direction: column;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .mapdiv {
   flex: 1 2 auto;
