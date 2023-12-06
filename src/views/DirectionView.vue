@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="direction-view">
     <div class="wrapper">
       <ResponsiveImage
         name="compass"
@@ -42,22 +42,20 @@ const bearingDegree = computed(() => {
   const b = bearing(deviceLocation.value[0], deviceLocation.value[1], targetBench.value[0], targetBench.value[1]);
   return ((orientation?.value ?? 0) - b + 360) % 360;
 });
-
-
-
 </script>
 
 <style scoped lang="scss">
-.home {
+.direction-view {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   backdrop-filter: blur(10px);
 }
-
-p {
-  margin-bottom: 30px;
+.wrapper {
+  position: relative;
+  width: 210px;
+  height: 210px;
 }
 .direction {
   position: absolute;
@@ -69,12 +67,6 @@ p {
   width: 100%;
   height: 100%;
 }
-.wrapper {
-  position: relative;
-  width: 210px;
-  height: 210px;
-}
-
 .dir-nav {
   position: absolute;
   left: 0;

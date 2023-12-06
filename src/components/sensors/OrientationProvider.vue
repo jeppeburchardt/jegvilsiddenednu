@@ -7,7 +7,7 @@
     button="Find min retning"
     :error="error"
     :state="uiState"
-    @accept="onGetOrientationClick"
+    @onAccept="onGetOrientationClick"
   />
 </template>
 

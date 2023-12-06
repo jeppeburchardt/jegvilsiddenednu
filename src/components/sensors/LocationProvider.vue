@@ -7,7 +7,7 @@
     button="Find min position"
     :error="error"
     :state="uiState"
-    @accept="onGetLocationClick"
+    @onAccept="onGetLocationClick"
   />
 </template>
 

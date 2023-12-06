@@ -5,7 +5,7 @@
       <div class="grid">
         <h2>{{ headline }}</h2>
         <p>{{ description }}</p>
-        <PushButton @click="$emit('accept')" :text="button" class="push-button" />
+        <PushButton @click="$emit('onAccept')" :text="button" class="push-button" />
       </div>
     </div>
 
@@ -15,8 +15,10 @@
     </div>
 
     <!-- error -->
+    <!-- todo: find sad mood image -->
+    <!-- todo: retry -->
     <div class="prompt" v-if="state === 'error'">
-      <div class="mood" :style="{ backgroundImage: `url(${getMoodIamge()}` }" /> <!-- todo: find sad mood image -->
+      <div class="mood" :style="{ backgroundImage: `url(${getMoodIamge()}` }" /> 
       <div class="grid">
         <h2>{{ headline }}</h2>
         <p>Der skete desværre en fejl. Har du husket HTTPS?</p>
