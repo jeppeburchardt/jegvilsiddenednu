@@ -28,7 +28,7 @@
           zIndex: isTargetBench(bench) ? 1 : 0,
           anchorPoint: isTargetBench(bench) ? 'BOTTOM_CENTER' : 'CENTER',
         }"
-        @click="setUserSelectedBench(bench)"
+        @click="selectBench(bench)"
       >
         <ResponsiveImage name="bench" v-if="!isTargetBench(bench)" />
         <ResponsiveImage name="target-bench" v-if="isTargetBench(bench)" />
@@ -40,15 +40,21 @@
         
       </CustomControl>
     </GoogleMap>
-    <nav class="map-nav">
-      <div>
-        <div>Bænke inden for {{ SEARCH_RADIUS }} m</div>
-        <div class="strong">{{ amount }}</div>
-      </div>
-      <router-link to="/dir">
-        <ResponsiveImage name="nav-dir" />
-      </router-link>
-    </nav>
+    <div class="map-nav">
+      <BenchInfo />
+      <nav>
+        <a href="#" @click="panToMe()">
+          <ResponsiveImage name="nav-loc" />
+        </a>
+        <a href="#" @click="selectClosest()">
+          <ResponsiveImage name="nav-closest" />
+        </a>
+        <span class="spacer" />
+        <router-link to="/dir">
+          <ResponsiveImage name="nav-up" />
+        </router-link>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -60,6 +66,7 @@ import { computed, inject, ref, watchEffect } from "vue";
 import { GOOGLE_MAPS_API_KEY, SEARCH_RADIUS } from "../constants";
 import { GoogleMap, Circle, CustomMarker, CustomControl } from "vue3-google-map";
 import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
+import BenchInfo from "../components/ui/BenchInfo.vue";
 
 const store = useStore();
 const location = inject(LocationKey);
@@ -68,8 +75,6 @@ const isInitialPositionSet = ref(false)
 
 const nearbyBenches = computed(() => store.state.nearbyBenches);
 const targetBench = computed(() => store.getters.targetBench);
-const amount = computed(() => store.getters.amountOfNearbyBenches);
-// const total = computed(() => store.getters.totalBenches.toLocaleString('da-DK'));
 
 const locationGmap = computed(() => ({
   lat: location?.value?.position.latitude || 0,
@@ -81,8 +86,23 @@ function isTargetBench(bench: [number, number]) {
   return bench[0] === targetBench.value[0] && bench[1] === targetBench.value[1];
 }
 
-function setUserSelectedBench(bench: [number, number]) {
+function selectBench(bench: [number, number]) {
   store.dispatch(ActionTypes.SELECT_BENCH, bench);
+  if (gMapRef.value?.ready) {
+    gMapRef.value.map.panTo({ lat: bench[0], lng: bench[1] });
+  }
+}
+
+function panToMe() {
+  if (gMapRef.value?.ready) {
+    gMapRef.value.map.panTo(locationGmap.value);
+  }
+}
+
+async function selectClosest() {
+  await store.dispatch(ActionTypes.SELECT_CLOSEST_BENCH);
+  const bench = store.getters.targetBench;
+  if (!bench) return;
   if (gMapRef.value?.ready) {
     gMapRef.value.map.panTo({ lat: bench[0], lng: bench[1] });
   }
@@ -120,10 +140,25 @@ p.footer {
   left: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
-  padding: 24px 24px 48px 24px;
-  
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.7) 100%);
+  padding: 0 24px 24px 24px;
   font-weight: 600;
+  
+  pointer-events: none;
+
+  nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+
+    .spacer {
+      flex: 1 2 auto;
+    }
+  }
+
+  a, button {
+    pointer-events: all;
+  } 
 
   .strong {
     font-size: 40px;

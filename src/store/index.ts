@@ -41,6 +41,7 @@ export const store = createStore<State>({
     targetBench: null,
     deviceLocation: null,
     nearbyBenches: [],
+    userSelectedBench: null,
   },
   getters,
   mutations,

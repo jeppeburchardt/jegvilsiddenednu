@@ -34,10 +34,12 @@ import MapView from "./views/MapView.vue";
 
 .drawer-enter-active {
   transition: transform 400ms;
+  transition-timing-function: ease-out;
   transform: translateY(100%);
 }
 .drawer-leave-active {
   transition: transform 400ms;
+  transition-timing-function: ease-in;
   transform: translateY(0);
 }
 .drawer-enter-to {

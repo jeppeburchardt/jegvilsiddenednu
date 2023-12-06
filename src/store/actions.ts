@@ -7,6 +7,7 @@ import { findNearbyLocations } from "../utils";
 export enum ActionTypes {
   UPDATE_DEVICE_LOCATION = "updateDeviceLocation",
   SELECT_BENCH = "selectBench",
+  SELECT_CLOSEST_BENCH = "selectClosestBench",
 }
 
 export type AugmentedActionContext = {
@@ -20,11 +21,14 @@ export interface Actions {
   [ActionTypes.UPDATE_DEVICE_LOCATION](
     { commit }: AugmentedActionContext,
     payload: Location
-  ): void;
+  ): Promise<any>;
   [ActionTypes.SELECT_BENCH](
     { commit }: AugmentedActionContext,
     payload: Location
-  ): void;
+  ): Promise<any>;
+  [ActionTypes.SELECT_CLOSEST_BENCH]({
+    commit,
+  }: AugmentedActionContext): Promise<any>;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -53,10 +57,13 @@ export const actions: ActionTree<State, State> & Actions = {
       commit(MutationTypes.SET_NEARBY_BENCHES, nearby);
     }
   },
-  [ActionTypes.SELECT_BENCH](
+  async [ActionTypes.SELECT_BENCH](
     { commit }: AugmentedActionContext,
     location: Location
   ) {
     commit(MutationTypes.SET_USER_SELECTED_BENCH, location);
+  },
+  async [ActionTypes.SELECT_CLOSEST_BENCH]({ commit }) {
+    commit(MutationTypes.SET_USER_SELECTED_BENCH, null);
   },
 };
