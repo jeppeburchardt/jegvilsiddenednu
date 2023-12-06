@@ -13,10 +13,10 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, provide, ref } from "vue";
-import { LocationKey, LocationWrapper } from "../types";
-import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
-import { useStore } from "../store";
-import { ActionTypes } from "../store/actions";
+import { LocationKey, LocationWrapper } from "../../types.js";
+import PromptScreen, { PromptScreenState } from "../ui/PromptScreen.vue";
+import { useStore } from "../../store/index.js";
+import { ActionTypes } from "../../store/actions.js";
 
 const store = useStore();
 const pollTimerId = ref<number>();

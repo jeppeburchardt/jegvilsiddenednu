@@ -1,9 +1,7 @@
 <template>
     <!-- initial -->
     <div class="prompt" v-if="state === 'initial'">
-      <div class="mood" :style="{ backgroundImage: `url(${getMoodIamge()}` }">
-        
-      </div>
+      <div class="mood" :style="{ backgroundImage: `url(${getMoodIamge()}` }" />
       <div class="grid">
         <h2>{{ headline }}</h2>
         <p>{{ description }}</p>
@@ -17,8 +15,13 @@
     </div>
 
     <!-- error -->
-    <div v-if="state === 'error'">
-      <p>Der skete en fejl: {{ error }}</p>
+    <div class="prompt" v-if="state === 'error'">
+      <div class="mood" :style="{ backgroundImage: `url(${getMoodIamge()}` }" /> <!-- todo: find sad mood image -->
+      <div class="grid">
+        <h2>{{ headline }}</h2>
+        <p>Der skete desværre en fejl. Har du husket HTTPS?</p>
+        <pre>{{ error }}</pre>
+      </div>
     </div>
 </template>
 

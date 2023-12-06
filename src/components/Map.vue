@@ -59,14 +59,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store";
-import { ActionTypes } from "../store/actions";
-import { LocationKey } from "../types";
+import { useStore } from "../store/index.js";
+import { ActionTypes } from "../store/actions.js";
+import { LocationKey } from "../types.js";
 import { computed, inject, ref, watchEffect } from "vue";
-import { GOOGLE_MAPS_API_KEY, SEARCH_RADIUS } from "../constants";
+import { GOOGLE_MAPS_API_KEY, SEARCH_RADIUS } from "../constants.js";
 import { GoogleMap, Circle, CustomMarker, CustomControl } from "vue3-google-map";
-import ResponsiveImage from "../components/ui/ResponsiveImage.vue";
-import BenchInfo from "../components/ui/BenchInfo.vue";
+import ResponsiveImage from "./ui/ResponsiveImage.vue";
+import BenchInfo from "./ui/BenchInfo.vue";
 
 const store = useStore();
 const location = inject(LocationKey);

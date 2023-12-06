@@ -13,8 +13,8 @@
 
 <script lang="ts" setup>
 import { onMounted, provide, ref } from "vue";
-import { OrientationKey } from "../types";
-import PromptScreen, { PromptScreenState } from "./ui/PromptScreen.vue";
+import { OrientationKey } from "../../types.js";
+import PromptScreen, { PromptScreenState } from "../ui/PromptScreen.vue";
 
 const error = ref<string>();
 const uiState = ref<PromptScreenState>("initial");

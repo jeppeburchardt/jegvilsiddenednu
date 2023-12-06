@@ -38,7 +38,6 @@ const accuracy = computed(() => {
 function makeLatLng(value:[number, number]) {
   return { latitude: value[0], longitude: value[1] };
 }
-
 </script>
 
 <style scoped lang="scss">
