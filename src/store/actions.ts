@@ -21,14 +21,12 @@ export interface Actions {
   [ActionTypes.UPDATE_DEVICE_LOCATION](
     { commit }: AugmentedActionContext,
     payload: Location
-  ): Promise<any>;
+  ): void;
   [ActionTypes.SELECT_BENCH](
     { commit }: AugmentedActionContext,
     payload: Location
-  ): Promise<any>;
-  [ActionTypes.SELECT_CLOSEST_BENCH]({
-    commit,
-  }: AugmentedActionContext): Promise<any>;
+  ): void;
+  [ActionTypes.SELECT_CLOSEST_BENCH]({ commit }: AugmentedActionContext): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
