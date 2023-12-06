@@ -83,6 +83,9 @@ function isTargetBench(bench: [number, number]) {
 
 function setUserSelectedBench(bench: [number, number]) {
   store.dispatch(ActionTypes.SELECT_BENCH, bench);
+  if (gMapRef.value?.ready) {
+    gMapRef.value.map.panTo({ lat: bench[0], lng: bench[1] });
+  }
 }
 
 watchEffect(() => {
